@@ -11,6 +11,7 @@ import ru.skillbranch.gameofthrones.data.remote.res.HouseRes
 import ru.skillbranch.gameofthrones.repositories.RootRepository
 
 
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -18,6 +19,7 @@ import ru.skillbranch.gameofthrones.repositories.RootRepository
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
 
     private val stubHouseStark = HouseRes(
         url = "https://www.anapioficeandfire.com/api/houses/362",
@@ -190,14 +192,13 @@ class ExampleInstrumentedTest {
     }
 
     @Test
-    fun insert_characters_and_find() {
+    fun insert_charters_and_find() {
         ///Дроп базы
         val lock = Object()
         RootRepository.dropDb {
             synchronized(lock) { lock.notify() }
         }
         synchronized(lock) { lock.wait() }
-        println("--------------111111111111")
 
         //Запись домов
         val lock0 = Object()
@@ -205,7 +206,7 @@ class ExampleInstrumentedTest {
             synchronized(lock0) { lock0.notify() }
         }
         synchronized(lock0) { lock0.wait() }
-        println("--------------2222222222222")
+
         //Запись персонажей
         val lock1 = Object()
         val characters = listOf(
@@ -217,7 +218,7 @@ class ExampleInstrumentedTest {
             synchronized(lock1) { lock1.notify() }
         }
         synchronized(lock1) { lock1.wait() }
-        println("--------------3333333333333")
+
         val lock2 = Object()
         var actualCharacters: List<CharacterItem>? = null
         RootRepository.findCharactersByHouseName("Stark") {
@@ -225,17 +226,16 @@ class ExampleInstrumentedTest {
             synchronized(lock2) { lock2.notify() }
         }
         synchronized(lock2) { lock2.wait() }
-        assertEquals(true, 1==1)
 
-//        assertEquals(stubCharacterJonSnow.name, actualCharacters?.first()?.name)
-//        assertEquals(stubCharacterJonSnow.aliases, actualCharacters?.first()?.aliases)
-//
-//        assertEquals(stubCharacterLyanna.name, actualCharacters?.last()?.name)
-//        assertEquals(stubCharacterLyanna.aliases, actualCharacters?.last()?.aliases)
+        assertEquals(stubCharacterJonSnow.name, actualCharacters?.first()?.name)
+        assertEquals(stubCharacterJonSnow.aliases, actualCharacters?.first()?.aliases)
+
+        assertEquals(stubCharacterLyanna.name, actualCharacters?.last()?.name)
+        assertEquals(stubCharacterLyanna.aliases, actualCharacters?.last()?.aliases)
     }
 
     @Test
-    fun insert_characters_and_full() {
+    fun insert_charters_and_full() {
         ///Дроп базы
         val lock = Object()
         RootRepository.dropDb {

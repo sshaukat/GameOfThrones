@@ -1,8 +1,11 @@
 package ru.skillbranch.gameofthrones.data.local.entities
 
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "characters")
 data class Character(
+    @PrimaryKey
     val id: String,
     val name: String,
     val gender: String,
@@ -33,32 +36,13 @@ data class CharacterFull(
     val died: String,
     val titles: List<String>,
     val aliases: List<String>,
-    val house:String, //rel
+    val house: String, //rel
     val father: RelativeCharacter?,
     val mother: RelativeCharacter?
 )
 
 data class RelativeCharacter(
     val id: String,
-    val name: String,
-    val house:String //rel
+    val name: String = "",
+    val house: String = "" //rel
 )
-
-@Entity(tableName = "characters_general")
-data class CharacterGeneral(
-    @PrimaryKey val id: String,
-    @ColumnInfo val name: String,
-    @ColumnInfo val gender: String,
-    @ColumnInfo val culture: String,
-    @ColumnInfo val born: String,
-    @ColumnInfo val died: String,
-    @ColumnInfo @TypeConverters(ListStrConverters::class) val titles: List<String> = listOf(),
-    @ColumnInfo @TypeConverters(ListStrConverters::class) val aliases: List<String> = listOf(),
-    @ColumnInfo var father: String, //rel
-    @ColumnInfo var mother: String, //rel
-    @ColumnInfo val spouse: String,
-    @ColumnInfo val houseId: String?,//rel
-    @ColumnInfo val house: String,//rel
-    @ColumnInfo val words: String
-)
-
